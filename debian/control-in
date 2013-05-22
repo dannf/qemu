@@ -361,6 +361,8 @@ Package: qemu-user
 Architecture: amd64 arm armel armhf hppa i386 ia64 mips mipsel powerpc ppc64 s390x sparc sparc64
 Multi-Arch: foreign
 Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: qemu-kvm (<< 1.2.0.dfsg-1)
+Replaces: qemu-kvm (<< 1.2.0.dfsg-1)
 Suggests: sudo
 :ubuntu:Breaks: qemu-kvm (<< 1.2.0.dfsg-1)
 :ubuntu:Replaces: qemu-kvm (<< 1.2.0.dfsg-1)
@@ -451,3 +453,11 @@ Description: QEMU Full virtualization on x86 hardware (transitional package)
  Please note that old qemu-kvm configuration files (in /etc/kvm/) are
  no longer used.
 
+Package: qemu-common
+Architecture: all
+Depends: ${misc:Depends}, qemu-keymaps
+Section: oldlibs
+Description: dummy transitional package from qemu-common to qemu-keymaps
+ This transitional package helps users transition from the qemu-common package
+ to the qemu-keymaps package.  Once this package and its dependencies are
+ installed you can safely remove it.
