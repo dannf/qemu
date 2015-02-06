@@ -2,6 +2,8 @@ qemu (1:2.1+dfsg-12) UNRELEASED; urgency=medium
 
   * Backport changes required to support EFI ROMs for accelerated
     ARM guests.
+  * ARM/virt: Pass console info to kernel via device-tree instead of requiring
+    a user-provided console= parameter.
 
  -- dann frazier <dannf@debian.org>  Fri, 06 Feb 2015 16:09:10 -0700
 

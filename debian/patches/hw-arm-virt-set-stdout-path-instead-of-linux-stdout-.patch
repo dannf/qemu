@@ -1,0 +1,30 @@
+From 9c7074da5ec64e1fd61df881ab291f75541ff2b0 Mon Sep 17 00:00:00 2001
+From: Leif Lindholm <leif.lindholm@linaro.org>
+Date: Wed, 19 Nov 2014 11:08:45 +0000
+Subject: [PATCH] hw/arm/virt: set stdout-path instead of linux,stdout-path
+
+ePAPR 1.1 defines the stdout-path property, making the os-specific
+linux,stdout-path property redundant. Change the DT setup for ARM virt
+to use the generic property - supported by Linux since 3.15.
+
+The old QEMU behaviour was not present in any released version of
+QEMU, and was only added to QEMU after the kernel changed, so
+this should not break any existing setups.
+
+Signed-off-by: Leif Lindholm <leif.lindholm@linaro.org>
+[PMM: add note to commit about the old behaviour never hving been
+in a released version of QEMU]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Index: qemu.debian/hw/arm/virt.c
+===================================================================
+--- qemu.debian.orig/hw/arm/virt.c
++++ qemu.debian/hw/arm/virt.c
+@@ -356,7 +356,7 @@ static void create_uart(const VirtBoardI
+     qemu_fdt_setprop(vbi->fdt, nodename, "clock-names",
+                          clocknames, sizeof(clocknames));
+ 
+-    qemu_fdt_setprop_string(vbi->fdt, "/chosen", "linux,stdout-path", nodename);
++    qemu_fdt_setprop_string(vbi->fdt, "/chosen", "stdout-path", nodename);
+     g_free(nodename);
+ }
+ 

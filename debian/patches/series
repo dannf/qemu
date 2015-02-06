@@ -37,3 +37,6 @@ cirrus-don-t-overflow-CirrusVGAState-cirrus_bltbuf-CVE-2014-8106.patch
 hw-arm-virt-Provide-flash-devices-for-boot-ROMs.patch
 hw-arm-boot-load-device-tree-to-base-of-DRAM-if-no-k.patch
 linux-headers-make-define-of-KVM_CAP_READONLY_MEM-un.patch
+# ARM/virt: Pass console info in devicetree instead of requiring console= param
+hw-arm-virt-add-linux-stdout-path-to-chosen-DT-node.patch
+hw-arm-virt-set-stdout-path-instead-of-linux-stdout-.patch

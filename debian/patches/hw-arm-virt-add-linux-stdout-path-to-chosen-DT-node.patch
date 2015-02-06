@@ -1,0 +1,27 @@
+From f022b8e95379b0433d13509706b66f38fc15dde8 Mon Sep 17 00:00:00 2001
+From: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Date: Fri, 12 Sep 2014 14:06:47 +0100
+Subject: [PATCH] hw/arm/virt: add linux, stdout-path to /chosen DT node
+
+Add a property "linux,stdout-path" to the /chosen DT node and make
+it point to the emulated UART. This allows users such as the Linux
+kernel to produce console output without the need to pass console=
+or earlycon=pl011,0x... command line arguments.
+
+Signed-off-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Message-id: 1409317439-29349-1-git-send-email-ard.biesheuvel@linaro.org
+Reviewed-by: Rob Herring <rob.herring@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Index: qemu.debian/hw/arm/virt.c
+===================================================================
+--- qemu.debian.orig/hw/arm/virt.c
++++ qemu.debian/hw/arm/virt.c
+@@ -355,6 +355,8 @@ static void create_uart(const VirtBoardI
+                                vbi->clock_phandle, vbi->clock_phandle);
+     qemu_fdt_setprop(vbi->fdt, nodename, "clock-names",
+                          clocknames, sizeof(clocknames));
++
++    qemu_fdt_setprop_string(vbi->fdt, "/chosen", "linux,stdout-path", nodename);
+     g_free(nodename);
+ }
+ 
