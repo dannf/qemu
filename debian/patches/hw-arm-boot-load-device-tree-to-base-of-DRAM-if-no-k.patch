@@ -1,0 +1,36 @@
+From 69e7f76f6a1ed8fe13602c8b5f51cdb6ce3a3981 Mon Sep 17 00:00:00 2001
+From: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Date: Fri, 12 Sep 2014 14:06:50 +0100
+Subject: [PATCH] hw/arm/boot: load device tree to base of DRAM if no -kernel
+ option was passed
+
+If we are running the 'virt' machine, we may have a device tree blob but no
+kernel to supply it to if no -kernel option was passed. In that case, copy it
+to the base of RAM where it can be picked up by a bootloader.
+
+Signed-off-by: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Message-id: 1410453915-9344-4-git-send-email-ard.biesheuvel@linaro.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+
+[dannf: backported to older 2-argument load_dtb() flavor]
+Index: qemu.debian/hw/arm/boot.c
+===================================================================
+--- qemu.debian.orig/hw/arm/boot.c
++++ qemu.debian/hw/arm/boot.c
+@@ -455,6 +455,16 @@ void arm_load_kernel(ARMCPU *cpu, struct
+ 
+     /* Load the kernel.  */
+     if (!info->kernel_filename) {
++
++        if (have_dtb(info)) {
++            /* If we have a device tree blob, but no kernel to supply it to,
++             * copy it to the base of RAM for a bootloader to pick up.
++             */
++            if (load_dtb(info->loader_start, info) < 0) {
++                exit(1);
++            }
++        }
++
+         /* If no kernel specified, do nothing; we will start from address 0
+          * (typically a boot ROM image) in the same way as hardware.
+          */

@@ -1,3 +1,10 @@
+qemu (1:2.1+dfsg-12) UNRELEASED; urgency=medium
+
+  * Backport changes required to support EFI ROMs for accelerated
+    ARM guests.
+
+ -- dann frazier <dannf@debian.org>  Fri, 06 Feb 2015 16:09:10 -0700
+
 qemu (1:2.1+dfsg-11) unstable; urgency=medium
 
   * bump epoch and reupload to cancel 2.2+dfsg-1exp upload

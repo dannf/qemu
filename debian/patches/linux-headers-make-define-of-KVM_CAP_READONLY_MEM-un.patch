@@ -1,0 +1,28 @@
+From 6c2a6bf505f49a46412b6ca23036560b93908cde Mon Sep 17 00:00:00 2001
+From: dann frazier <dannf@debian.org>
+Date: Fri, 6 Feb 2015 14:24:48 -0700
+Subject: [PATCH] linux-headers: make #define of KVM_CAP_READONLY_MEM
+ unconditional
+
+Required for running accelerated instances on ARM
+
+This went upstream as part of:
+ 444b1996cb3769d8636b223c281fb09ab89b7a31 linux-headers: update to 3.18-rc5
+
+Author: Ard Biesheuvel <ard.biesheuvel@linaro.org>
+Signed-off-by: dann frazier <dannf@debian.org>
+
+Index: qemu.debian/linux-headers/linux/kvm.h
+===================================================================
+--- qemu.debian.orig/linux-headers/linux/kvm.h
++++ qemu.debian/linux-headers/linux/kvm.h
+@@ -733,9 +733,7 @@ struct kvm_ppc_smmu_info {
+ #define KVM_CAP_PPC_GET_SMMU_INFO 78
+ #define KVM_CAP_S390_COW 79
+ #define KVM_CAP_PPC_ALLOC_HTAB 80
+-#ifdef __KVM_HAVE_READONLY_MEM
+ #define KVM_CAP_READONLY_MEM 81
+-#endif
+ #define KVM_CAP_IRQFD_RESAMPLE 82
+ #define KVM_CAP_PPC_BOOKE_WATCHDOG 83
+ #define KVM_CAP_PPC_HTAB_FD 84
